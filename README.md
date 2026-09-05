@@ -1,13 +1,15 @@
 UEFI-Shell
 ==========
 
-[![Build status](https://img.shields.io/github/actions/workflow/status/pbatard/UEFI-Shell/linux_gcc_edk2.yml?label=Build%20Status&style=flat-square)](https://github.com/pbatard/UEFI-Shell/actions/workflows/linux_gcc_edk2.yml)
-[![Github stats](https://img.shields.io/github/downloads/pbatard/UEFI-Shell/total.svg?label=Downloads&style=flat-square)](https://github.com/pbatard/UEFI-Shell/releases)
-[![Release](https://img.shields.io/badge/Latest%20Release-26H1%20(edk2--stable202602)-blue.svg?style=flat-square)](https://github.com/pbatard/UEFI-Shell/releases)
+[![Build status](https://img.shields.io/github/actions/workflow/status/MagicalDrizzle/UEFI-Shell/linux_gcc_edk2.yml?label=Build%20Status&style=flat-square)](https://github.com/MagicalDrizzle/UEFI-Shell/actions/workflows/linux_gcc_edk2.yml)
+[![Github stats](https://img.shields.io/github/downloads/MagicalDrizzle/UEFI-Shell/total.svg?label=Downloads&style=flat-square)](https://github.com/MagicalDrizzle/UEFI-Shell/releases)
+[![Release](https://img.shields.io/badge/Latest%20Release-26Q3%20(edk2--stable202602)-blue.svg?style=flat-square)](https://github.com/MagicalDrizzle/UEFI-Shell/releases)
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
 This repository contains pre-built UEFI Shell binary images, generated from
 official [EDK2](https://github.com/tianocore/edk2) stable releases.
+
+Fork by myself (Mizuki/MagicalDrizzle) to track closer to upstream - quarterly instead of biannually.
 
 ## Usage
 
@@ -54,8 +56,8 @@ you with complete assurance that they do not contain anything malicious.
 To validate this claim, you can perform the following:
 
 1. Locate the build action for the ISO you downloaded under
-   https://github.com/pbatard/UEFI-Shell/actions. For instance, for the 21H1
-   release, this would be https://github.com/pbatard/UEFI-Shell/actions/runs/1160237413.
+   https://github.com/MagicalDrizzle/UEFI-Shell/actions. For instance, for the 21H1
+   release, this would be https://github.com/MagicalDrizzle/UEFI-Shell/actions/runs/1160237413.
    (Note that because of GitHub's **stupidly short** retention policy for build
    logs, which is limited to 3 months, and our bi-annual release schedule, it is
    possible that the latest build log is no longer accessible. Yet, if you are
@@ -65,7 +67,7 @@ To validate this claim, you can perform the following:
    repository and submodules` task. The last line for that task provides the
    SHA-1 of the repository commit that was used for the build process (for 21H1
    that would be `19803c2b2183849fc3a4d6f08cc3c0549232df0c`).
-3. Append that SHA-1 to `https://github.com/pbatard/UEFI-Shell/commit/` to
+3. Append that SHA-1 to `https://github.com/MagicalDrizzle/UEFI-Shell/commit/` to
    validate that you end up with one of the __public__ commits that were
    pushed to this repository. This validates that the build was not triggered
    by a "hidden" commit, that would perform something malicious, and that we

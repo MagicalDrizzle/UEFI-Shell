@@ -4,12 +4,16 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 env:
-  COMPILER: GCC5
-  GCC5_AARCH64_PREFIX: aarch64-linux-gnu-
-  GCC5_RISCV64_PREFIX: riscv64-linux-gnu-
-  GCC5_LOONGARCH64_PREFIX: loongarch64-unknown-linux-gnu-
+  COMPILER: GCC
+  GCC_AARCH64_PREFIX: aarch64-linux-gnu-
+  GCC_RISCV64_PREFIX: riscv64-linux-gnu-
+  GCC_LOONGARCH64_PREFIX: loongarch64-unknown-linux-gnu-
   FULL_SHELL_GUID: EA4BB293-2D7F-4456-A681-1F22F42CD0BC
   BUILD_TYPES: DEBUG RELEASE
   ARCHS: X64 IA32 AARCH64 RISCV64 LOONGARCH64
@@ -66,7 +70,7 @@ jobs:
         source edksetup.sh
         for BUILD_TYPE in ${{ env.BUILD_TYPES }}; do
           for ARCH in ${{ env.ARCHS }} ; do
-            build -a $ARCH -b $BUILD_TYPE -t ${{ env.COMPILER }} -p ShellPkg/ShellPkg.dsc --pcd gEfiShellPkgTokenSpaceGuid.PcdShellScreenLogCount=8 --pcd gEfiShellPkgTokenSpaceGuid.PcdShellSupplier=L"${{ steps.set_version.outputs.edk2_tag }} (https://github.com/pbatard/UEFI-Shell)"
+            build -a $ARCH -b $BUILD_TYPE -t ${{ env.COMPILER }} -p ShellPkg/ShellPkg.dsc --pcd gEfiShellPkgTokenSpaceGuid.PcdShellScreenLogCount=8 --pcd gEfiShellPkgTokenSpaceGuid.PcdShellSupplier=L"${{ steps.set_version.outputs.edk2_tag }} (https://github.com/MagicalDrizzle/UEFI-Shell)"
           done
         done
 
@@ -111,6 +115,8 @@ jobs:
             mv $BUILD_TYPE/EFI/BOOT/BOOTX64.EFI $BUILD_TYPE/EFI/BOOT/BOOTx64.EFI
           fi
           printf "*** UEFI Shell v%s, release %s%s ***\n\n" ${{ steps.set_version.outputs.shell_version }} ${{ steps.set_version.outputs.shell_release }} "$( [ $BUILD_TYPE == DEBUG ] && echo ' (DEBUG BUILD)')" > $BUILD_TYPE/README.txt
+          printf "Notice: This is an unofficial build, meant to track closer to upstream EDK2.\n" >> $BUILD_TYPE/README.txt
+          printf "Report issues to https://github.com/MagicalDrizzle/UEFI-Shell, not upstream.\n\n" >> $BUILD_TYPE/README.txt
           printf "This bootable image contains builds of the official UEFI Shell, as provided by\n" >> $BUILD_TYPE/README.txt
           printf "the Open Source 'EDK2' project (https://github.com/tianocore/edk2).\n\n" >> $BUILD_TYPE/README.txt
           printf "More specifically, this release, which we call '%s', was produced using the\n" ${{ steps.set_version.outputs.shell_release }} >> $BUILD_TYPE/README.txt
@@ -187,7 +193,7 @@ jobs:
         printf "\`\`\`\n" >> body.txt
 
     - name: Create release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         body_path: ./body.txt
